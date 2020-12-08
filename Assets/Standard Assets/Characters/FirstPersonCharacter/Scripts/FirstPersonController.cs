@@ -43,6 +43,8 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private bool m_Jumping;
         private AudioSource m_AudioSource;
 
+        public GameObject bulletPrefab;
+
         // Use this for initialization
         private void Start()
         {
@@ -63,6 +65,13 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private void Update()
         {
             RotateView();
+
+            if(Input.GetMouseButtonDown(0))
+            {
+                GameObject bulletObject = Instantiate(bulletPrefab);
+                bulletObject.transform.position = m_Camera.transform.position + m_Camera.transform.forward;
+                bulletObject.transform.forward = m_Camera.transform.forward;
+            }
             // the jump state needs to read here to make sure it is not missed
             if (!m_Jump)
             {
