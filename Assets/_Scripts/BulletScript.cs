@@ -21,7 +21,7 @@ public class BulletScript : MonoBehaviour
         //Bullet Movement
         transform.position += transform.forward * speed * Time.deltaTime;
 
-        //
+        // Bullet Liftime
         lifeTimer -= Time.deltaTime;
         if(lifeTimer <= 0f)
         {
