@@ -10,7 +10,7 @@ public class BulletScript : MonoBehaviour
     private float lifeTimer;
 
     // Start is called before the first frame update
-    void Start()
+    void OnEnable()
     {
         lifeTimer = lifeDuration;
     }
@@ -25,7 +25,7 @@ public class BulletScript : MonoBehaviour
         lifeTimer -= Time.deltaTime;
         if(lifeTimer <= 0f)
         {
-            Destroy(gameObject);
+            gameObject.SetActive(false);
         }
     }
 }
