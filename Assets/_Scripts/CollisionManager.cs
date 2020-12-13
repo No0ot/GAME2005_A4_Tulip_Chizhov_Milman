@@ -5,12 +5,12 @@ using UnityEngine;
 [System.Serializable]
 public class CollisionManager : MonoBehaviour
 {
-    public CubeBehaviour[] actors;
+    public CollisionObject[] actors;
 
     // Start is called before the first frame update
     void Start()
     {
-        actors = FindObjectsOfType<CubeBehaviour>();
+        actors = FindObjectsOfType<CollisionObject>();
     }
 
     // Update is called once per frame
@@ -22,7 +22,24 @@ public class CollisionManager : MonoBehaviour
             {
                 if (i != j)
                 {
-                    CheckAABBs(actors[i], actors[j]);
+                    CollisionType lhs = actors[i].collisionType;
+                    CollisionType rhs = actors[j].collisionType;
+                    if (lhs == rhs && lhs == CollisionType.CUBE)
+                    {
+                        CheckAABBs((CubeBehaviour)actors[i], (CubeBehaviour)actors[j]);
+                    }
+                    if (lhs == CollisionType.CUBE && rhs == CollisionType.SPHERE)
+                    {
+                        CheckCubeSphere(actors[j], (CubeBehaviour)actors[i]);
+                    }
+                    if (rhs == CollisionType.CUBE && lhs == CollisionType.SPHERE)
+                    {
+                        CheckCubeSphere(actors[i], (CubeBehaviour)actors[j]);
+                    }
+                    if (lhs == rhs && lhs == CollisionType.SPHERE)
+                    {
+                        CheckSpheres(actors[i], actors[j]);
+                    }
                 }
             }
         }
@@ -34,20 +51,32 @@ public class CollisionManager : MonoBehaviour
             (a.min.y <= b.max.y && a.max.y >= b.min.y) &&
             (a.min.z <= b.max.z && a.max.z >= b.min.z))
         {
-            if (!a.contacts.Contains(b))
-            {
-                a.contacts.Add(b);
-                a.isColliding = true;
-            }
+            //COLLISION RESPONSE
         }
-        else
+    }
+
+    public static void CheckCubeSphere(CollisionObject a, CubeBehaviour b)
+    {
+        var x = Mathf.Max(b.min.x, Mathf.Min(a.transform.position.x, b.max.x));
+        var y = Mathf.Max(b.min.y, Mathf.Min(a.transform.position.y, b.max.y));
+        var z = Mathf.Max(b.min.z, Mathf.Min(a.transform.position.z, b.max.z));
+
+        var distance = Mathf.Sqrt((x - a.transform.position.x) * (x - a.transform.position.x) +
+            (y - a.transform.position.y) * (y - a.transform.position.y) +
+            (z - a.transform.position.z) * (z - a.transform.position.z));
+
+        if (distance < a.transform.localScale.x)
         {
-            if (a.contacts.Contains(b))
-            {
-                a.contacts.Remove(b);
-                a.isColliding = false;
-            }
-           
+            //COLLISION RESPONSE
+        }
+    }
+
+    public static void CheckSpheres(CollisionObject a, CollisionObject b)
+    {
+        float distance = Vector3.Distance(a.transform.position, a.transform.position);
+        if (distance <= Vector3.Magnitude(a.transform.localScale) + Vector3.Magnitude(b.transform.localScale))
+        {
+            //COLLISION RESPONSE
         }
     }
 }

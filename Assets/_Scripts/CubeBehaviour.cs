@@ -5,13 +5,12 @@ using Color = UnityEngine.Color;
 
 
 [System.Serializable]
-public class CubeBehaviour : MonoBehaviour
+public class CubeBehaviour : CollisionObject
 {
     public Vector3 size;
     public Vector3 max;
     public Vector3 min;
-    public bool isColliding;
-    public List<CubeBehaviour> contacts;
+    public Vector3[] surfaces;
 
     private MeshFilter meshFilter;
     private Bounds bounds;
@@ -24,6 +23,9 @@ public class CubeBehaviour : MonoBehaviour
         bounds = meshFilter.mesh.bounds;
         size = bounds.size;
 
+        collisionType = CollisionType.CUBE;
+        restitution = 0.5f;
+        surfaces = new Vector3[6];
     }
 
     // Update is called once per frame
@@ -31,12 +33,29 @@ public class CubeBehaviour : MonoBehaviour
     {
         max = Vector3.Scale(bounds.max, transform.localScale) + transform.position;
         min = Vector3.Scale(bounds.min, transform.localScale) + transform.position;
+        BuildSurfaceFlags();
     }
 
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.magenta;
 
-        //Gizmos.DrawWireCube(transform.position, Vector3.Scale(new Vector3(1.0f, 1.0f, 1.0f), transform.localScale));
+        Gizmos.DrawWireCube(transform.position, Vector3.Scale(new Vector3(1.0f, 1.0f, 1.0f), transform.localScale));
+    }
+
+    void BuildSurfaceFlags()
+    {
+        //top
+        surfaces[0] = new Vector3(transform.position.x, transform.position.y + transform.localScale.y, transform.position.z);
+        //bottom
+        surfaces[1] = new Vector3(transform.position.x, transform.position.y - transform.localScale.y, transform.position.z);
+        //left
+        surfaces[2] = new Vector3(transform.position.x - transform.localScale.x, transform.position.y, transform.position.z);
+        //right
+        surfaces[3] = new Vector3(transform.position.x + transform.localScale.x, transform.position.y, transform.position.z);
+        //front
+        surfaces[4] = new Vector3(transform.position.x, transform.position.y, transform.position.z - transform.localScale.x);
+        //back
+        surfaces[4] = new Vector3(transform.position.x, transform.position.y, transform.position.z + transform.localScale.x);
     }
 }

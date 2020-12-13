@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BulletScript : MonoBehaviour
+public class BulletScript : CollisionObject
 {
     public float speed = 8f;
     public float lifeDuration = 2f;
+    public float radius;
 
     private float lifeTimer;
 
@@ -13,6 +14,9 @@ public class BulletScript : MonoBehaviour
     void OnEnable()
     {
         lifeTimer = lifeDuration;
+        collisionType = CollisionType.SPHERE;
+        radius = transform.localScale.magnitude / 2.0f;
+        restitution = 0.8f;
     }
 
     // Update is called once per frame
