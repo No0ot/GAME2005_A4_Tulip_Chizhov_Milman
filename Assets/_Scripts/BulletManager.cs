@@ -11,7 +11,7 @@ public class BulletManager : MonoBehaviour
     public GameObject bulletPrefab;
     public int bulletAmount = 20;
 
-    private List<GameObject> bullets;
+    public List<GameObject> bullets;
     // Start is called before the first frame update
     void Awake()
     {

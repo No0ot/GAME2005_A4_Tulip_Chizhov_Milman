@@ -11,6 +11,7 @@ public class CubeBehaviour : CollisionObject
     public Vector3 max;
     public Vector3 min;
     public Vector3[] surfaces;
+    public bool colliding;
 
     private MeshFilter meshFilter;
     private Bounds bounds;
@@ -34,6 +35,11 @@ public class CubeBehaviour : CollisionObject
         max = Vector3.Scale(bounds.max, transform.localScale) + transform.position;
         min = Vector3.Scale(bounds.min, transform.localScale) + transform.position;
         BuildSurfaceFlags();
+
+        if (colliding)
+        {
+            transform.position += transform.forward * 5 * Time.deltaTime;
+        }
     }
 
     private void OnDrawGizmos()

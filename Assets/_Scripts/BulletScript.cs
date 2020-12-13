@@ -31,5 +31,19 @@ public class BulletScript : CollisionObject
         {
             gameObject.SetActive(false);
         }
+
+        //Check Collisons
+        foreach (CubeBehaviour actor in CollisionManager.Instance.cubes)
+        {
+            if (CollisionManager.Instance.CheckCubeSphere(this, actor))
+            {
+                Debug.Log("Bullet Hit: " + actor.name);
+                actor.transform.forward = transform.forward;
+                actor.colliding = true;
+                transform.forward = transform.forward * -1.0f;
+
+            }
+        }
+          
     }
 }
