@@ -34,7 +34,7 @@ public class BulletManager : MonoBehaviour
         {
             if(!bullet.activeInHierarchy)
             {
-                bullet.SetActive(true);
+               // bullet.SetActive(true);
                 return bullet;
             }
         }

@@ -17,10 +17,10 @@ public class PlayerScript : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-  
             GameObject bulletObject = BulletManager.Instance.getBullet();
             bulletObject.transform.position = m_Camera.transform.position + m_Camera.transform.forward;
             bulletObject.transform.forward = m_Camera.transform.forward;
+            bulletObject.SetActive(true);
         }
     }
 }

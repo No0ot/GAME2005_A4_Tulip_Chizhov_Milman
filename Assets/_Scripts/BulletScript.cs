@@ -11,8 +11,14 @@ public class BulletScript : CollisionObject
     private float lifeTimer;
 
     // Start is called before the first frame update
+    void Start()
+    {
+        velocity = transform.forward * speed;
+    }
+
     void OnEnable()
     {
+        velocity = transform.forward * speed;
         lifeTimer = lifeDuration;
         collisionType = CollisionType.SPHERE;
         radius = transform.localScale.magnitude / 2.0f;
@@ -22,8 +28,13 @@ public class BulletScript : CollisionObject
     // Update is called once per frame
     void Update()
     {
+        //base.Update();
         //Bullet Movement
-        transform.position += transform.forward * speed * Time.deltaTime;
+        acceleration = new Vector3(0,-0.1f, 0);
+        velocity += acceleration;
+
+
+        transform.position += velocity * Time.deltaTime;
 
         // Bullet Liftime
         lifeTimer -= Time.deltaTime;
@@ -37,10 +48,15 @@ public class BulletScript : CollisionObject
         {
             if (CollisionManager.Instance.CheckCubeSphere(this, actor))
             {
-                Debug.Log("Bullet Hit: " + actor.name);
-                actor.transform.forward = transform.forward;
-                actor.colliding = true;
-                transform.forward = transform.forward * -1.0f;
+                if (!actor.isWall)
+                {
+                    actor.transform.forward = transform.forward;
+                    actor.colliding = true;
+                }
+
+                // Vector3 colVec = transform.forward * -1.0f;
+
+                //velocity = Vector3.Cross(velocity, colVec);
 
             }
         }

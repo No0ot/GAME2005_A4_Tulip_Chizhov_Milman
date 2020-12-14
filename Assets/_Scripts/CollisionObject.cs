@@ -13,7 +13,7 @@ public class CollisionObject : MonoBehaviour
     public CollisionType collisionType;
     public float restitution; //0 - no bounce, 1 - full bounce
     public float mass;
-    bool physicsEnabled, gravityEnabled;
+    public bool physicsEnabled, gravityEnabled;
     public Vector3 velocity;
     public Vector3 acceleration;
 
@@ -29,13 +29,13 @@ public class CollisionObject : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+   public void Update()
     {
         if (physicsEnabled)
         {
-            if (gravityEnabled) acceleration.y -= 9.8f;
+            if (gravityEnabled) acceleration.y -= 0.00001f;
             velocity += acceleration;
-            transform.position = velocity + transform.position;
+            transform.position += velocity;
             acceleration *= 0;
         }
     }
