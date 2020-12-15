@@ -103,17 +103,17 @@ public class CubeBehaviour : CollisionObject
     void BuildSurfaceFlags()
     {
         //top
-        surfaces[0] = new Vector3(transform.position.x, transform.position.y + transform.localScale.y, transform.position.z);
+        surfaces[0] = new Vector3(transform.position.x, transform.position.y + (transform.localScale.y), transform.position.z);
         //bottom
-        surfaces[1] = new Vector3(transform.position.x, transform.position.y - transform.localScale.y, transform.position.z);
+        surfaces[1] = new Vector3(transform.position.x, transform.position.y - (transform.localScale.y), transform.position.z);
         //left
-        surfaces[2] = new Vector3(transform.position.x - transform.localScale.x, transform.position.y, transform.position.z);
+        surfaces[2] = new Vector3(transform.position.x - (transform.localScale.x), transform.position.y, transform.position.z);
         //right
-        surfaces[3] = new Vector3(transform.position.x + transform.localScale.x, transform.position.y, transform.position.z);
+        surfaces[3] = new Vector3(transform.position.x + (transform.localScale.x), transform.position.y, transform.position.z);
         //front
-        surfaces[4] = new Vector3(transform.position.x, transform.position.y, transform.position.z - transform.localScale.x);
+        surfaces[4] = new Vector3(transform.position.x, transform.position.y, transform.position.z - (transform.localScale.z));
         //back
-        surfaces[4] = new Vector3(transform.position.x, transform.position.y, transform.position.z + transform.localScale.x);
+        surfaces[4] = new Vector3(transform.position.x, transform.position.y, transform.position.z + (transform.localScale.z));
     }
 
     void BuildNormals()

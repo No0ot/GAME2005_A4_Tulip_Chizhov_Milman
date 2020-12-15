@@ -103,7 +103,7 @@ MonoBehaviour:
   acceleration: {x: 0, y: 0, z: 0}
   isColliding: 0
   contacts: []
-  speed: 50
-  lifeDuration: 2
+  speed: 40
+  lifeDuration: 3
   radius: 0
   closestwall: {x: 0, y: 0, z: 0}
