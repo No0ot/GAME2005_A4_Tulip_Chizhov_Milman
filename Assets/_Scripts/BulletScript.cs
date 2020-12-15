@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class BulletScript : CollisionObject
 {
-    public float speed = 8f;
+    public float speed = 50f;
     public float lifeDuration = 2f;
     public float radius;
+    public Vector3 closestwall;
 
     private float lifeTimer;
 
@@ -54,12 +55,36 @@ public class BulletScript : CollisionObject
                     actor.colliding = true;
                 }
 
-                // Vector3 colVec = transform.forward * -1.0f;
+                Vector3[] cube_walls = actor.surfaces;
+                float closestdistance = 1000.0f;
+                foreach (Vector3 wall in cube_walls)
+                {
+                    float tempdistance = Mathf.Sqrt((transform.position.x - wall.x) * (transform.position.x - wall.x) +
+                                                    (transform.position.y - wall.y) * (transform.position.y - wall.y) +
+                                                    (transform.position.z - wall.z) * (transform.position.z - wall.z));
+                    if (tempdistance < closestdistance)
+                    {
+                        closestdistance = tempdistance;
+                        closestwall = wall;
+                    }
+                }
 
-                //velocity = Vector3.Cross(velocity, colVec);
+
+                if (closestwall == actor.surfaces[0] || closestwall == actor.surfaces[1])
+                {
+                    velocity.y *= -0.8f;
+                }
+                else if (closestwall == actor.surfaces[2] || closestwall == actor.surfaces[3])
+                {
+                    velocity.x *= -0.8f;
+                }
+                else if (closestwall == actor.surfaces[4] || closestwall == actor.surfaces[5])
+                {
+                    velocity.z *= -0.8f;
+                }
 
             }
         }
-          
+        closestwall *= 0;
     }
 }

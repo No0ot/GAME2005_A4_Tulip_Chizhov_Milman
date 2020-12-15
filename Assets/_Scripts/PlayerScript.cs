@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerScript : MonoBehaviour
 {
@@ -21,6 +22,12 @@ public class PlayerScript : MonoBehaviour
             bulletObject.transform.position = m_Camera.transform.position + m_Camera.transform.forward;
             bulletObject.transform.forward = m_Camera.transform.forward;
             bulletObject.SetActive(true);
+        }
+
+        if (Input.GetKeyDown("t"))
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+            Cursor.visible = true;
         }
     }
 }
